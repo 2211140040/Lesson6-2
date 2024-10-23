@@ -1,0 +1,16 @@
+<h1>カート</h1>
+
+<% if flash[:notice] %>
+    <%= flash[:notice] %>
+<% end %>
+
+<% current_cart.cart_items.each do |ci| %>
+  <p>
+    <%= ci.product.name %>（￥<%= ci.product.price %>） × <%= ci.qty %>個
+    <%= link_to 'カートから削除', cart_item_path(ci), data: { turbo_method: :delete } %>
+  </p>
+<% end %>
+
+<p>合計: <%= current_cart.cart_items.sum { |item| item.qty * item.product.price } %>円</p>
+
+<%= link_to "戻る", root_path %>
